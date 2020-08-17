@@ -1,4 +1,3 @@
-![Fork Sync](https://github.com/lunarobliq/privilege-escalation-awesome-scripts-suite/workflows/Fork%20Sync/badge.svg)
 # PEASS - Privilege Escalation Awesome Scripts SUITE
 
 ![](https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/raw/master/linPEAS/images/peass.png)
