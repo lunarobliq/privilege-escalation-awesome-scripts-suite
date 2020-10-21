@@ -21,7 +21,7 @@ namespace winPEAS
         // Static blacklists
         static string strTrue = "True";
         static string strFalse = "False";
-        static string badgroups = "docker|Remote |DNSAdmins|AD Recycle Bin|Azure Admins|Admins";//The space in Remote is important to not mix with SeShutdownRemotePrivilege
+        static string badgroups = "docker|Remote |DNSAdmins|AD Recycle Bin|Azure Admins|Admins|Server Operators";//The space in Remote is important to not mix with SeShutdownRemotePrivilege
         static string badpasswd = "NotChange|NotExpi";
         static string badPrivileges = "SeImpersonatePrivilege|SeAssignPrimaryPrivilege|SeTcbPrivilege|SeBackupPrivilege|SeRestorePrivilege|SeCreateTokenPrivilege|SeLoadDriverPrivilege|SeTakeOwnershipPrivilege|SeDebugPrivilege";
         //static string goodSoft = "Windows Phone Kits|Windows Kits|Windows Defender|Windows Mail|Windows Media Player|Windows Multimedia Platform|windows nt|Windows Photo Viewer|Windows Portable Devices|Windows Security|Windows Sidebar|WindowsApps|WindowsPowerShell| Windows$|Microsoft|WOW6432Node|internet explorer|Internet Explorer|Common Files";
@@ -33,9 +33,8 @@ namespace winPEAS
         static string print_credStrings_limited = "[pP][aA][sS][sS][wW][a-zA-Z0-9_-]*|[pP][wW][dD][a-zA-Z0-9_-]*|[nN][aA][mM][eE]|[lL][oO][gG][iI][nN]|[cC][oO][nN][tT][rR][aA][sS][eE][a-zA-Z0-9_-]*|[cC][rR][eE][dD][eE][nN][tT][iI][aA][lL][a-zA-Z0-9_-]*|[aA][pP][iI]|[tT][oO][kK][eE][nN]|[sS][eE][sS][sS][a-zA-Z0-9_-]*";
         static string print_credStrings = print_credStrings_limited + "|[uU][sS][eE][rR][a-zA-Z0-9_-]*";
         static List<string> credStringsRegex = new List<string> { "PASSW[a-zA-Z0-9_-]*=", "PWD[a-zA-Z0-9_-]*=", "USER[a-zA-Z0-9_-]*=", "NAME=", "&LOGIN", "=LOGIN", "CONTRASEÑA[a-zA-Z0-9_-]*=", "CREDENTIAL[a-zA-Z0-9_-]*=", "API_KEY", "TOKEN" };
-        static string patterns_file_creds = @"RDCMan.settings;*.rdg;*_history*;httpd.conf;.htpasswd;.gitconfig;.git-credentials;Dockerfile;docker-compose.yml;access_tokens.db;accessTokens.json;azureProfile.json;appcmd.exe;scclient.exe;*.gpg$;*.pgp$;*config*.php;elasticsearch.y*ml;kibana.y*ml;*.p12$;*.cer$;known_hosts;*id_rsa*;*id_dsa*;*.ovpn;tomcat-users.xml;web.config;*.kdbx;KeePass.config;Ntds.dit;SAM;SYSTEM;FreeSSHDservice.ini;sysprep.inf;sysprep.xml;*vnc*.ini;*vnc*.c*nf*;*vnc*.txt;*vnc*.xml;php.ini;https.conf;https-xampp.conf;my.ini;my.cnf;access.log;error.log;server.xml;ConsoleHost_history.txt";
-        static string complete_patterns_file_creds = ";unattend.txt;*.der$;*.csr$;unattend.xml;unattended.xml;groups.xml;services.xml;scheduledtasks.xml;printers.xml;drives.xml;datasources.xml;setupinfo;setupinfo.bak";
-        static string patterns_file_creds_color = @"RDCMan.settings|.rdg|_history|httpd.conf|.htpasswd|.gitconfig|.git-credentials|Dockerfile|docker-compose.ymlaccess_tokens.db|accessTokens.json|azureProfile.json|appcmd.exe|scclient.exe|unattend.txt|access.log|error.log|credential|password|.gpg|.pgp|config.php|elasticsearch|kibana.|.p12|\.der|.csr|.crt|.cer|.pem|known_hosts|id_rsa|id_dsa|.ovpn|tomcat-users.xml|web.config|.kdbx|.key|KeePass.config|ntds.dir|Ntds.dit|sam|system|SAM|SYSTEM|FreeSSHDservice.ini|sysprep.inf|sysprep.xml|unattend.xml|unattended.xml|vnc|groups.xml|services.xml|scheduledtasks.xml|printers.xml|drives.xml|datasources.xml|php.ini|https.conf|https-xampp.conf|my.ini|my.cnf|access.log|error.log|server.xml|setupinfo";
+        static string patterns_file_creds = @"RDCMan.settings;*.rdg;*_history*;httpd.conf;.htpasswd;.gitconfig;.git-credentials;Dockerfile;docker-compose.yml;access_tokens.db;accessTokens.json;azureProfile.json;appcmd.exe;scclient.exe;*.gpg$;*.pgp$;*config*.php;elasticsearch.y*ml;kibana.y*ml;*.p12$;*.cer$;known_hosts;*id_rsa*;*id_dsa*;*.ovpn;tomcat-users.xml;web.config;*.kdbx;KeePass.config;Ntds.dit;SAM;SYSTEM;security;software;FreeSSHDservice.ini;sysprep.inf;sysprep.xml;*vnc*.ini;*vnc*.c*nf*;*vnc*.txt;*vnc*.xml;php.ini;https.conf;https-xampp.conf;my.ini;my.cnf;access.log;error.log;server.xml;ConsoleHost_history.txt;pagefile.sys;NetSetup.log;iis6.log;AppEvent.Evt;SecEvent.Evt;default.sav;security.sav;software.sav;system.sav;ntuser.dat;index.dat;bash.exe;wsl.exe;unattend.txt;*.der$;*.csr$;unattend.xml;unattended.xml;groups.xml;services.xml;scheduledtasks.xml;printers.xml;drives.xml;datasources.xml;setupinfo;setupinfo.bak";
+        static string patterns_file_creds_color = @"RDCMan.settings|.rdg|_history|httpd.conf|.htpasswd|.gitconfig|.git-credentials|Dockerfile|docker-compose.ymlaccess_tokens.db|accessTokens.json|azureProfile.json|appcmd.exe|scclient.exe|unattend.txt|access.log|error.log|credential|password|.gpg|.pgp|config.php|elasticsearch|kibana.|.p12|\.der|.csr|.crt|.cer|.pem|known_hosts|id_rsa|id_dsa|.ovpn|tomcat-users.xml|web.config|.kdbx|.key|KeePass.config|ntds.dir|Ntds.dit|sam|system|SAM|SYSTEM|security|software|SECURITY|SOFTWARE|FreeSSHDservice.ini|sysprep.inf|sysprep.xml|unattend.xml|unattended.xml|vnc|groups.xml|services.xml|scheduledtasks.xml|printers.xml|drives.xml|datasources.xml|php.ini|https.conf|https-xampp.conf|my.ini|my.cnf|access.log|error.log|server.xml|setupinfo|pagefile.sys|NetSetup.log|iis6.log|AppEvent.Evt|SecEvent.Evt|default.sav|security.sav|software.sav|system.sav|ntuser.dat|index.dat|bash.exe|wsl.exe";
 
         // Create Dynamic blacklists
         static string currentUserName = Environment.UserName;
@@ -209,7 +208,37 @@ namespace winPEAS
                 }
             }
 
-            void PrintAuditInfo()
+            void PrintTranscriptPS()
+            {
+                try
+                {
+                    Beaprint.MainPrint("PS default transcripts history");
+                    Beaprint.InfoPrint("Read the PS history inside these files (if any)");
+                    string drive = Path.GetPathRoot(Environment.SystemDirectory);
+                    string path = drive + @"transcripts\";
+                    if (Directory.Exists(path))
+                    {
+                        string[] fileEntries = Directory.GetFiles(path);
+                        List<string> fileEntriesl = new List<string>(fileEntries);
+                        if (fileEntries.Length > 0)
+                        {
+                            Dictionary<string, string> colors = new Dictionary<string, string>()
+                            {
+                                { "^.*", Beaprint.ansi_color_bad },
+                            };
+                            Beaprint.ListPrint(fileEntriesl, colors);
+                        }
+                    }
+
+
+                }
+                catch (Exception ex)
+                {
+                    Beaprint.GrayPrint(String.Format("{0}", ex));
+                }
+            }
+
+           void PrintAuditInfo()
             {
                 try
                 {
@@ -463,9 +492,67 @@ namespace winPEAS
                 }
             }
 
+            void PrintWSUS()
+            {
+                try
+                {
+                    Beaprint.MainPrint("Checking WSUS");
+                    Beaprint.LinkPrint("https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#wsus");
+                    string path = "Software\\Policies\\Microsoft\\Windows\\WindowsUpdate";
+                    string path2 = "Software\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU";
+                    string HKLM_WSUS = MyUtils.GetRegValue("HKLM", path, "WUServer");
+                    string using_HKLM_WSUS = MyUtils.GetRegValue("HKLM", path, "UseWUServer");
+                    if (HKLM_WSUS.Contains("http://"))
+                    {
+                        Beaprint.BadPrint("    WSUS is using http: " + HKLM_WSUS);
+                        Beaprint.InfoPrint("You can test https://github.com/pimps/wsuxploit to escalate privileges");
+                        if (using_HKLM_WSUS == "1")
+                            Beaprint.BadPrint("    And UseWUServer is equals to 1, so it is vulnerable!");
+                        else if (using_HKLM_WSUS == "0")
+                            Beaprint.GoodPrint("    But UseWUServer is equals to 0, so it is not vulnerable!");
+                        else
+                            System.Console.WriteLine("    But UseWUServer is equals to " + using_HKLM_WSUS + ", so it may work or not");
+                    }
+                    else
+                    {
+                        if (String.IsNullOrEmpty(HKLM_WSUS))
+                            Beaprint.NotFoundPrint();
+                        else
+                            Beaprint.GoodPrint("    WSUS value: " + HKLM_WSUS);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Beaprint.GrayPrint(String.Format("{0}", ex));
+                }
+            }
+
+            void PrintAlwaysInstallElevated()
+            {
+                try
+                {
+                    Beaprint.MainPrint("Checking AlwaysInstallElevated");
+                    Beaprint.LinkPrint("https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated");
+                    string path = "Software\\Policies\\Microsoft\\Windows\\Installer";
+                    string HKLM_AIE = MyUtils.GetRegValue("HKLM", path, "AlwaysInstallElevated");
+                    string HKCU_AIE = MyUtils.GetRegValue("HKCU", path, "AlwaysInstallElevated");
+                    if (HKLM_AIE == "1")
+                        Beaprint.BadPrint("    AlwaysInstallElevated set to 1 in HKLM!");
+                    if (HKCU_AIE == "1")
+                        Beaprint.BadPrint("    AlwaysInstallElevated set to 1 in HKCU!");
+                    if (HKLM_AIE != "1" && HKCU_AIE != "1")
+                        Beaprint.GoodPrint("    AlwaysInstallElevated isn't available");
+                }
+                catch (Exception ex)
+                {
+                    Beaprint.GrayPrint(String.Format("{0}", ex));
+                }
+            }
+
             Beaprint.GreatPrint("System Information");
             PrintBasicSystemInfo();
-            PrintPSInfo();
+            PrintUserEV();
+            PrintSystemEV();
             PrintAuditInfo();
             PrintWEFInfo();
             PrintLAPSInfo();
@@ -473,12 +560,14 @@ namespace winPEAS
             PrintLSAProtection();
             PrintCredentialGuard();
             PrintCachedCreds();
-            PrintUserEV();
-            PrintSystemEV();
-            PrintInetInfo();
-            PrintDrivesInfo();
             PrintAVInfo();
             PrintUACInfo();
+            PrintPSInfo();
+            PrintTranscriptPS();
+            PrintInetInfo();
+            PrintDrivesInfo();
+            PrintWSUS();
+            PrintAlwaysInstallElevated();
         }
 
 
@@ -638,6 +727,27 @@ namespace winPEAS
                 }
             }
 
+            void PrintHomeFolders()
+            {
+                try
+                {
+                    Beaprint.MainPrint("Home folders found");
+                    List<string> user_folders = UserInfo.GetUsersFolders();
+                    foreach (string ufold in user_folders)
+                    {
+                        string perms = String.Join(", ", MyUtils.GetPermissionsFolder(ufold, currentUserSIDs));
+                        if (perms.Length > 0)
+                            Beaprint.BadPrint("    " + ufold + " : " + perms);
+                        else
+                            Beaprint.GoodPrint("    " + ufold);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Beaprint.GrayPrint(String.Format("{0}", ex));
+                }
+            }
+
             void PrintAutoLogin()
             {
                 try
@@ -671,27 +781,6 @@ namespace winPEAS
                 }
             }
 
-            void PrintHomeFolders()
-            {
-                try
-                {
-                    Beaprint.MainPrint("Home folders found");
-                    List<string> user_folders = UserInfo.GetUsersFolders();
-                    foreach (string ufold in user_folders)
-                    {
-                        string perms = String.Join(", ", MyUtils.GetPermissionsFolder(ufold, currentUserSIDs));
-                        if (perms.Length > 0)
-                            Beaprint.BadPrint("    " + ufold + " : " + perms);
-                        else
-                            Beaprint.GoodPrint("    " + ufold);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Beaprint.GrayPrint(String.Format("{0}", ex));
-                }
-            }
-
             void PrintPasswordPolicies()
             {
                 try
@@ -715,8 +804,8 @@ namespace winPEAS
             PrintLoggedUsers();
             PrintRdpSessions();
             PrintEverLoggedUsers();
-            PrintAutoLogin();
             PrintHomeFolders();
+            PrintAutoLogin();
             PrintPasswordPolicies();
         }
 
@@ -1470,36 +1559,6 @@ namespace winPEAS
                 }
             }
 
-            void PrintTranscriptPS()
-            {
-                try
-                {
-                    Beaprint.MainPrint("PS default transcripts history");
-                    Beaprint.InfoPrint("Read the PS histpry inside these files (if any)");
-                    string drive = Path.GetPathRoot(Environment.SystemDirectory);
-                    string path = drive + @"transcripts\";
-                    if (Directory.Exists(path))
-                    {
-                        string[] fileEntries = Directory.GetFiles(path);
-                        List<string> fileEntriesl = new List<string>(fileEntries);
-                        if (fileEntries.Length > 0) 
-                        {
-                            Dictionary<string, string> colors = new Dictionary<string, string>()
-                            {
-                                { "^.*", Beaprint.ansi_color_bad },
-                            };
-                            Beaprint.ListPrint(fileEntriesl, colors);
-                        }
-                    }
-
-                        
-                }
-                catch (Exception ex)
-                {
-                    Beaprint.GrayPrint(String.Format("{0}", ex));
-                }
-            }
-
             void PrintDPAPIMasterKeys()
             {
                 try
@@ -1527,7 +1586,7 @@ namespace winPEAS
             {
                 try
                 {
-                    Beaprint.MainPrint("Checking for Credential Files");
+                    Beaprint.MainPrint("Checking for DPAPI Credential Files");
                     Beaprint.LinkPrint("https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#dpapi");
                     List<Dictionary<string, string>> cred_files = KnownFileCredsInfo.GetCredFiles();
                     Beaprint.DictPrint(cred_files, false);
@@ -1590,21 +1649,25 @@ namespace winPEAS
             {
                 try
                 {
-                    Beaprint.MainPrint("Looking saved Wifis");
+                    Beaprint.MainPrint("Looking for saved Wifi credentials");
                     if (exec_cmd)
                     {
-                        Dictionary<string, string> colorsC = new Dictionary<string, string>()
+                        Dictionary<string, string> networkConnections = Wifi.Retrieve();
+                        Dictionary<string, string> ansi_colors_regexp = new Dictionary<string, string>();
+
+                        //Make sure the passwords are all flagged as ansi_color_bad.
+                        foreach (var connection in networkConnections)
                         {
-                            { ": .*", Beaprint.ansi_color_bad },
-                        };
-                        Beaprint.AnsiPrint("    " + MyUtils.ExecCMD("wlan show profile", "netsh.exe"), colorsC);
+                            ansi_colors_regexp.Add(connection.Value, Beaprint.ansi_color_bad);
+                        }
+                        Beaprint.DictPrint(networkConnections, ansi_colors_regexp, false);
                     }
                     else
                     {
                         Beaprint.GrayPrint("    This function is not yet implemented.");
                         Beaprint.InfoPrint("If you want to list saved Wifis connections you can list the using 'netsh wlan show profile'");
+                        Beaprint.InfoPrint("If you want to get the clear-text password use 'netsh wlan show profile <SSID> key=clear'");
                     }
-                    Beaprint.InfoPrint("If you want to get the clear-text password use 'netsh wlan show profile <SSID> key=clear'");
                 }
                 catch (Exception ex)
                 {
@@ -1646,69 +1709,11 @@ namespace winPEAS
                 }
             }
 
-            void PrintAlwaysInstallElevated()
-            {
-                try
-                {
-                    Beaprint.MainPrint("Checking AlwaysInstallElevated");
-                    Beaprint.LinkPrint("https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#alwaysinstallelevated");
-                    string path = "Software\\Policies\\Microsoft\\Windows\\Installer";
-                    string HKLM_AIE = MyUtils.GetRegValue("HKLM", path, "AlwaysInstallElevated");
-                    string HKCU_AIE = MyUtils.GetRegValue("HKCU", path, "AlwaysInstallElevated");
-                    if (HKLM_AIE == "1")
-                        Beaprint.BadPrint("    AlwaysInstallElevated set to 1 in HKLM!");
-                    if (HKCU_AIE == "1")
-                        Beaprint.BadPrint("    AlwaysInstallElevated set to 1 in HKCU!");
-                    if (HKLM_AIE != "1" && HKCU_AIE != "1")
-                        Beaprint.GoodPrint("    AlwaysInstallElevated isn't available");
-                }
-                catch (Exception ex)
-                {
-                    Beaprint.GrayPrint(String.Format("{0}", ex));
-                }
-            }
-
-            void PrintWSUS()
-            {
-                try
-                {
-                    Beaprint.MainPrint("Checking WSUS");
-                    Beaprint.LinkPrint("https://book.hacktricks.xyz/windows/windows-local-privilege-escalation#wsus");
-                    string path = "Software\\Policies\\Microsoft\\Windows\\WindowsUpdate";
-                    string path2 = "Software\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU";
-                    string HKLM_WSUS = MyUtils.GetRegValue("HKLM", path, "WUServer");
-                    string using_HKLM_WSUS = MyUtils.GetRegValue("HKLM", path, "UseWUServer");
-                    if (HKLM_WSUS.Contains("http://"))
-                    {
-                        Beaprint.BadPrint("    WSUS is using http: " + HKLM_WSUS);
-                        Beaprint.InfoPrint("You can test https://github.com/pimps/wsuxploit to escalate privileges");
-                        if (using_HKLM_WSUS == "1")
-                            Beaprint.BadPrint("    And UseWUServer is equals to 1, so it is vulnerable!");
-                        else if (using_HKLM_WSUS == "0")
-                            Beaprint.GoodPrint("    But UseWUServer is equals to 0, so it is not vulnerable!");
-                        else
-                            System.Console.WriteLine("    But UseWUServer is equals to " + using_HKLM_WSUS + ", so it may work or not");
-                    }
-                    else
-                    {
-                        if (String.IsNullOrEmpty(HKLM_WSUS))
-                            Beaprint.NotFoundPrint();
-                        else
-                            Beaprint.GoodPrint("    WSUS value: " + HKLM_WSUS);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Beaprint.GrayPrint(String.Format("{0}", ex));
-                }
-            }
-
             Beaprint.GreatPrint("Windows Credentials");
             PrintvaultCreds();
             PrintCredManag();
             PrintSavedRDPInfo();
             PrintRecentRunCommands();
-            PrintTranscriptPS();
             PrintDPAPIMasterKeys();
             PrintDpapiCredFiles();
             PrintRCManFiles();
@@ -1717,8 +1722,6 @@ namespace winPEAS
             PrintWifi();
             PrintAppCmd();
             PrintSCClient();
-            PrintAlwaysInstallElevated();
-            PrintWSUS();
         }
 
 
@@ -2005,7 +2008,7 @@ namespace winPEAS
             {
                 try
                 {
-                    Beaprint.MainPrint("Unnattend Files");
+                    Beaprint.MainPrint("Unattend Files");
                     //Beaprint.LinkPrint("");
                     List<string> unattended_files = InterestingFiles.GetUnattendedInstallFiles();
                     foreach (string path in unattended_files)
@@ -2013,31 +2016,6 @@ namespace winPEAS
                         List<string> pwds = InterestingFiles.ExtractUnattenededPwd(path);
                         Beaprint.BadPrint("    "+path);
                         System.Console.WriteLine(String.Join("\n", pwds));
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Beaprint.GrayPrint(String.Format("{0}", ex));
-                }
-            }
-
-            void PrintConsoleHostHistory()
-            {
-                try
-                {
-                    Beaprint.MainPrint("Powershell History");
-                    string console_host_history = InterestingFiles.GetConsoleHostHistory();
-                    if (console_host_history != "")
-                    {
-                        
-                        string text = File.ReadAllText(console_host_history);
-                        List<string> credStringsRegexPowershell = new List<string>(credStringsRegex);
-                        credStringsRegexPowershell.Add("CONVERTTO-SECURESTRING");
-
-                        if (MyUtils.ContainsAnyRegex(text.ToUpper(), credStringsRegexPowershell))
-                            Beaprint.BadPrint("    " + console_host_history + " (Potential credentials found)");
-                        else
-                            System.Console.WriteLine("    " + console_host_history);
                     }
                 }
                 catch (Exception ex)
@@ -2269,7 +2247,6 @@ namespace winPEAS
             PrintSSHKeysReg();
             PrintCloudCreds();
             PrintUnattendFiles();
-            PrintConsoleHostHistory();
             PrintSAMBackups();
             PrintMcAffeSitelistFiles();
             PrintCachedGPPPassword();
@@ -2311,9 +2288,6 @@ namespace winPEAS
 
                 if (string.Equals(arg, "quiet", StringComparison.CurrentCultureIgnoreCase))
                     banner = false;
-
-                if (string.Equals(arg, "searchall", StringComparison.CurrentCultureIgnoreCase))
-                    patterns_file_creds = patterns_file_creds + complete_patterns_file_creds;
 
                 if (string.Equals(arg, "searchslow", StringComparison.CurrentCultureIgnoreCase))
                     search_fast = false;
@@ -2464,7 +2438,6 @@ namespace winPEAS
                 
 
             /*
-             * Wifi (passwords?)
              * Keylogger?
              * Input prompt ==> Better in PS
              * Cretae list of malicious drives that could allow to privesc?
